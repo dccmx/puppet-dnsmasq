@@ -1,7 +1,7 @@
 #Primary class with options
 class dnsmasq (
   $interface = 'eth0',
-  $domain = 'int.lan',
+  $domain = undef,
   $expand_hosts = true,
   $port = '53',
   $enable_tftp = false,
@@ -11,6 +11,8 @@ class dnsmasq (
   $domain_needed = true,
   $bogus_priv = true,
   $no_negcache = false,
+  $resolv_file = undef,
+  $resolv_servers = undef,
 ) {
   include dnsmasq::params
   include concat::setup
@@ -47,5 +49,11 @@ class dnsmasq (
     require => Package[$dnsmasq_package],
   }
 
+  if $resolv_file != undef {
+    file { $resolv_file:
+      content => template('dnsmasq/resolv.erb'),
+      notify  => Service[$dnsmasq_service],
+      require => Package[$dnsmasq_package],
+    }
+  }
 }
-

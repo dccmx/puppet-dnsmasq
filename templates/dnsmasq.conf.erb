@@ -1,28 +1,40 @@
 # THIS FILE IS MANAGED BY PUPPET
 # ALL MANUAL CHANGES WILL BE OVERWRITTEN
 
-<% if domain_needed -%>
+<% if @domain_needed -%>
 domain-needed
-<% end %>
-<% if bogus_priv -%>
+<% end -%>
+
+<% if @bogus_priv -%>
 bogus-priv
-<% end %>
-<% if strict_order -%>
+<% end -%>
+
+<% if @strict_order -%>
 strict-order
 <% end -%>
-port=<%= port %>
-<% if enable_tftp -%>
-dhcp-boot=<%= dhcp_boot %>
+
+port=<%= @port -%>
+
+<% if @enable_tftp -%>
+dhcp-boot=<%= @dhcp_boot -%>
 enable-tftp
-tftp-root=<%= tftp_root %>
-<% end %>
-interface=<%= interface %>
-<% if no_negcache -%>
+tftp-root=<%= @tftp_root -%>
+<% end -%>
+
+interface=<%= @interface -%>
+
+<% if @no_negcache -%>
 no-negcache
-<% end %>
-<% if expand_hosts -%>
+<% end -%>
+
+<% if @expand_hosts -%>
 expand-hosts
 <% end -%>
-<% if domain %>
-domain=<%= domain %>
-<% end %>
+
+<% if @domain -%>
+domain=<%= @domain -%>
+<% end -%>
+
+<% if @resolv_file  -%>
+resolv-file=<%= @resolv_file %>
+<% end -%>
