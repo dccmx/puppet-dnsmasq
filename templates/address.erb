@@ -1,3 +1,4 @@
 <% if name != '' -%>
-<%= "address=/#{name}/#{ip}\n" -%>
+<%= "address=/#{name}/#{ip}" %>
+<%= "host-record=#{name},#{ip}" %>
 <% end -%>
