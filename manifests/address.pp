@@ -1,6 +1,7 @@
 # Create an dnsmasq stub zone for caching upstream name resolvers.
 define dnsmasq::address (
   $ip,
+  $resolve_host=true,
 ) {
   include dnsmasq::params
 
