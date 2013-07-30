@@ -1,6 +1,5 @@
 # THIS FILE IS MANAGED BY PUPPET
 # ALL MANUAL CHANGES WILL BE OVERWRITTEN
-
 <% if @domain_needed -%>
 domain-needed
 <% end -%>
@@ -32,9 +31,11 @@ expand-hosts
 <% end -%>
 
 <% if @domain -%>
-domain=<%= @domain -%>
+domain=<%= @domain %>
 <% end -%>
 
 <% if @resolv_file  -%>
 resolv-file=<%= @resolv_file %>
 <% end -%>
+
+conf-dir=<%= @dnsmasq_confdir -%>

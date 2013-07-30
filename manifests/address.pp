@@ -1,15 +1,14 @@
 # Create an dnsmasq stub zone for caching upstream name resolvers.
 define dnsmasq::address (
   $ip,
-  $resolve_host=true,
 ) {
   include dnsmasq::params
 
-  $dnsmasq_conffile = $dnsmasq::params::dnsmasq_conffile
+  $address_conffile = $dnsmasq::params::dnsmasq_address_conffile
 
   concat::fragment { "dnsmasq-staticdns-${name}":
-    order   => '03',
-    target  => $dnsmasq_conffile,
+    order   => '00',
+    target  => $address_conffile,
     content => template('dnsmasq/address.erb'),
   }
 

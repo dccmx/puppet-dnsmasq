@@ -18,10 +18,13 @@ class dnsmasq (
   include concat::setup
 
   # Localize some variables
-  $dnsmasq_package     = $dnsmasq::params::dnsmasq_package
-  $dnsmasq_conffile     = $dnsmasq::params::dnsmasq_conffile
-  $dnsmasq_logdir      = $dnsmasq::params::dnsmasq_logdir
-  $dnsmasq_service     = $dnsmasq::params::dnsmasq_service
+  $dnsmasq_package          = $dnsmasq::params::dnsmasq_package
+  $dnsmasq_conffile         = $dnsmasq::params::dnsmasq_conffile
+  $dnsmasq_confdir          = $dnsmasq::params::dnsmasq_confdir
+  $dnsmasq_address_conffile = $dnsmasq::params::dnsmasq_address_conffile
+  $dnsmasq_host_conffile    = $dnsmasq::params::dnsmasq_host_conffile
+  $dnsmasq_logdir           = $dnsmasq::params::dnsmasq_logdir
+  $dnsmasq_service          = $dnsmasq::params::dnsmasq_service
 
 
   package { $dnsmasq_package:
@@ -37,14 +40,23 @@ class dnsmasq (
     require   => Package[$dnsmasq_package],
   }
 
-  concat::fragment { 'dnsmasq-header':
-    order   => '00',
-    target  => $dnsmasq_conffile,
+  file { $dnsmasq_confdir:
+    ensure => directory,
+  }
+
+  file { $dnsmasq_conffile:
+    ensure => present,
     content => template('dnsmasq/dnsmasq.conf.erb'),
+    notify  => Service[$dnsmasq_service],
     require => Package[$dnsmasq_package],
   }
 
-  concat { $dnsmasq_conffile:
+  concat { $dnsmasq_address_conffile:
+    notify  => Service[$dnsmasq_service],
+    require => Package[$dnsmasq_package],
+  }
+
+  concat { $dnsmasq_host_conffile:
     notify  => Service[$dnsmasq_service],
     require => Package[$dnsmasq_package],
   }
