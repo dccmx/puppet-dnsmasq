@@ -1,5 +1,6 @@
 define dnsmasq::host (
   $ip,
+  $names = [],
 ) {
   include dnsmasq::params
 
@@ -11,5 +12,7 @@ define dnsmasq::host (
     content => template('dnsmasq/host.erb'),
   }
 
+  $names.each | $aname | {
+    dnsmasq::address { $aname: ip => $ip }
+  }
 }
-
